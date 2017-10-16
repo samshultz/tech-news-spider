@@ -8,10 +8,10 @@ class VanguardSpider(scrapy.Spider):
     start_urls = ["https://www.vanguardngr.com/"]
 
     def parse(self, response):
-        for header in rresponse.css("span.rtp-latest-news-title"):
+        for header in response.css("span.rtp-latest-news-title"):
 
-            link = header.css("a[data-cs-element-type=story-promo-link]::attr(href)").extract_first()
+            link = header.css("a::attr(href)").extract_first()
             yield {
-                'link': header.css("a::attr(href)").extract_first(),
+                'link': response.urljoin(link),
                 'title': header.css("a::text").extract_first()
             }
